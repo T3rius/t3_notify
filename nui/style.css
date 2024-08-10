@@ -1,0 +1,86 @@
+#notifications {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 350px;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+.notification {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    color: white;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification .icon {
+    margin-right: 15px;
+    font-size: 30px;
+}
+
+.notification .content {
+    flex: 1;
+}
+
+.notification .content .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification .content .message {
+    font-size: 15px;
+}
+
+.notification .progress-bar {
+    position: absolute;
+    bottom: 5px;
+    left: 5;
+    height: 3.5px;
+    width: 10%;
+    transition: width linear;
+}
+
+.notification.inform .icon i {
+    color: #2f83ff;
+}
+
+.notification.error .icon i {
+    color: #dc3545;
+}
+
+.notification.success .icon i {
+    color: #47cf73;
+}
+
+.notification.warning .icon i {
+    color: #f39c12;
+}
+
+.notification.inform .progress-bar {
+    background-color: #2f83ff;
+}
+
+.notification.error .progress-bar {
+    background-color: #dc3545;
+}
+
+.notification.success .progress-bar {
+    background-color: #47cf73;
+}
+
+.notification.warning .progress-bar {
+    background-color: #f39c12;
+}
