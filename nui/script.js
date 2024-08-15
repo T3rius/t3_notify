@@ -11,11 +11,11 @@ function addNotification(type, title, message, duration) {
     
     const titleElem = document.createElement('div');
     titleElem.classList.add('title');
-    titleElem.textContent = title;
+    titleElem.innerHTML = formatText(title);
     
     const messageElem = document.createElement('div');
     messageElem.classList.add('message');
-    messageElem.textContent = message;
+    messageElem.innerHTML = formatText(message);
     
     const progressBar = document.createElement('div');
     progressBar.classList.add('progress-bar');
@@ -59,6 +59,12 @@ function getIcon(type) {
         default:
             return '<i class="fas fa-info-circle"></i>'; // Default icon
     }
+}
+
+function formatText(msg) {
+    let formattedMsg = msg.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    formattedMsg = formattedMsg.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    return formattedMsg;
 }
 
 function playAudio() {
