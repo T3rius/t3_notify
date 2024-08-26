@@ -1,7 +1,4 @@
 function notify(title, message, duration, type)
-    duration = duration or 5000
-    type = type or 'inform'
-
     SendNUIMessage({
         title = title,
         message = message,
