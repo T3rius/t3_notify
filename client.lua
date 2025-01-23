@@ -1,23 +1,24 @@
-function notify(title, message, duration, type)
+function notify(title, message, duration, type, position)
     SendNUIMessage({
         title = title,
         message = message,
         duration = duration,
         type = type,
+        position = position,
     })
 end
 
 RegisterNetEvent('t3:notify')
-AddEventHandler('t3:notify', function(title, message, duration, type)
-	notify(title, message, duration, type)
+AddEventHandler('t3:notify', function(title, message, duration, type, position)
+	notify(title, message, duration, type, position)
 end)
 --[[
 RegisterCommand('success', function()
-	exports.t3_notify:notify('SUCCESS', 'this is success notify', 5000, 'success')
+	exports.t3_notify:notify('', '*this is success notify*', 5000, 'success')
 end)
 
 RegisterCommand('info', function()
-    exports.t3_notify:notify('INFO', 'this is inform notify', 5000, 'inform')
+    exports.t3_notify:notify('INFO', 'this is inform notify', 5000, 'inform', 'bottom')
 end)
 
 RegisterCommand('error', function()
