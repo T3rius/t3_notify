@@ -1,9 +1,4 @@
-function addNotification(type, title, message, duration) {
-    type = type || 'inform';
-    duration = duration || 5000;
-    title = title || '';
-    message = message || '';
-
+function addNotification(type, title, message, duration, position) {
     const notification = document.createElement('div');
     notification.classList.add('notification', type);
 
@@ -40,7 +35,7 @@ function addNotification(type, title, message, duration) {
     notification.appendChild(content);
     notification.appendChild(progressBar);
 
-    const container = document.getElementById('notifications');
+    const container = getOrCreateContainer(position);
     container.appendChild(notification);
 
     playAudio();
@@ -55,8 +50,22 @@ function addNotification(type, title, message, duration) {
         notification.classList.remove('show');
         setTimeout(() => {
             notification.remove();
+            if (container.children.length === 0) {
+                container.remove();
+            }
         }, 500);
     }, duration + 100);
+}
+
+function getOrCreateContainer(position) {
+    let container = document.getElementById(`notifications-${position}`);
+    if (!container) {
+        container = document.createElement('div');
+        container.id = `notifications-${position}`;
+        container.classList.add('notifications-container', position);
+        document.body.appendChild(container);
+    }
+    return container;
 }
 
 function getIcon(type) {
@@ -88,6 +97,27 @@ function playAudio() {
 }
 
 window.addEventListener('message', function(event) {
-    const { type, title, message, duration } = event.data;
-    addNotification(type, title, message, duration);
+    const { type, title, message, duration, position } = event.data;
+
+    addNotification(type || 'inform', title || '', message || '', duration || 5000, position || 'top-right');
 });
+
+const css = document.createElement('style');
+css.type = 'text/css';
+css.innerHTML = `
+    .notifications-container {
+        position: fixed;
+        z-index: 9999;
+        max-width: 350px;
+        font-family: 'Roboto', Arial, sans-serif;
+    }
+    .notifications-container.top-right { top: 20px; right: 20px; }
+    .notifications-container.top-left { top: 20px; left: 20px; }
+    .notifications-container.top { top: 20px; left: 50%; transform: translateX(-50%); }
+    .notifications-container.bottom-right { bottom: 20px; right: 20px; }
+    .notifications-container.bottom-left { bottom: 20px; left: 20px; }
+    .notifications-container.bottom { bottom: 20px; left: 50%; transform: translateX(-50%); }
+    .notifications-container.center-right { top: 50%; right: 20px; transform: translateY(-50%); }
+    .notifications-container.center-left { top: 50%; left: 20px; transform: translateY(-50%); }
+`;
+document.head.appendChild(css);
